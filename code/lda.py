@@ -6,10 +6,19 @@ import re
 from sklearn.decomposition import LatentDirichletAllocation as LDA
 import nltk, csv
 
-stanza.download('en')
+#stanza.download('en')
 
 nlp = stanza.Pipeline('en')
 doc = nlp("Barack Obama was born in Hawaii.")
+print(doc)
+
+doc2 = nlp("Barack Obama was not born in Hawaii.")
+print(doc2)
+
+doc3 = nlp("Barack Obama isn't right.")
+print(doc3)
+
+doc3.sentences[0].print_dependencies()
 
 # nltk.download('stopwords', quiet=True, raise_on_error=True)
 # stop_words = set(nltk.corpus.stopwords.words('english'))

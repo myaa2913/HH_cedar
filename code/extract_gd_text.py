@@ -36,13 +36,13 @@ if conn!=None:
 
     try:
 
-        copy_cmd = 'SELECT agg_pro.pro_text,agg_pro.employerid,agg_pro.year FROM agg_pro INNER JOIN firm_chars ON agg_pro.employerid = firm_chars.employerid AND agg_pro.year = firm_chars.year WHERE firm_chars.num_reviews>=25'
+        copy_cmd = 'SELECT agg_pro_con.pro_text,agg_pro_con.con_text,agg_pro_con.employerid,agg_pro_con.year FROM agg_pro_con INNER JOIN firm_chars ON agg_pro_con.employerid = firm_chars.employerid AND agg_pro_con.year = firm_chars.year WHERE firm_chars.num_reviews>=25'
 
-        outFile = open('~\projects\def-mcorrito\mcorrito\HH\temp_data\agg_pro.csv','w')
+        outFile = open('~\projects\def-mcorrito\mcorrito\HH\temp_data\agg_pro_con.csv','w')
         
         cur.copy_expert(copy_cmd,outFile)
 
-        #conn.commit()
+        conn.commit()
         
     except Exception as err:
         print_psycopg2_exception(err)
