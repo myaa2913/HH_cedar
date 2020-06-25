@@ -8,7 +8,7 @@ import numpy as np
 
 def ldaModel(numWords,num_topics):
     #load phrase doc-term matrix
-    df = pd.read_csv('/ifs/gsb/mcorrito/divergence/data/' + 'top_unigrams_phrase_' + str(numWords) + '_pruned.csv',sep=',')
+    df = pd.read_csv('/home/mcorrito/projects/def-mcorrito/mcorrito/HH/data/' + 'top_unigrams_phrase_' + str(numWords) + '_pruned.csv',sep=',')
 
     #remove ids
     df = df.drop(df.columns[[0,1,2,3]],axis=1)
@@ -30,13 +30,13 @@ def ldaModel(numWords,num_topics):
 
     #plot and save convergence graph
     plt.plot(model.loglikelihoods_[5:])
-    plt.savefig('/ifs/gsb/mcorrito/divergence/output/' + 'lda_convergence_' + str(numWords) + '_' + str(num_topics) + '.png')
+    plt.savefig('/home/mcorrito/projects/def-mcorrito/mcorrito/HH/output/' + 'lda_convergence_' + str(numWords) + '_' + str(num_topics) + '.png')
     plt.close()
 
 
     ###save model components for use and evaluation
     ##save top words for each topic to csv file
-    with open('/ifs/gsb/mcorrito/divergence/output/' + str(numWords) + '_' + str(num_topics) + '_' + 'lda_words','w') as csvfile:
+    with open('/home/mcorrito/projects/def-mcorrito/mcorrito/HH/output/' + str(numWords) + '_' + str(num_topics) + '_' + 'lda_words','w') as csvfile:
         writer = csv.writer(csvfile,delimiter=',',lineterminator='\n')
         
         for i, topic_dist in enumerate(topic_word):
@@ -48,7 +48,7 @@ def ldaModel(numWords,num_topics):
 
     
     #apply model to working sample#######################################################################
-    df = pd.read_csv('/ifs/gsb/mcorrito/divergence/data/' + 'top_unigrams_' + str(numWords) + '_annual.csv',sep=',')
+    df = pd.read_csv('/home/mcorrito/projects/def-mcorrito/mcorrito/HH/data/' + 'top_unigrams_' + str(numWords) + '_annual.csv',sep=',')
 
     #remove ids and save for later concat
     ids = df.drop(df.columns[4:len(df.columns)],axis=1)
@@ -71,15 +71,15 @@ def ldaModel(numWords,num_topics):
     df = pd.DataFrame(modelTest)
     df = pd.concat([ids,wordCount,df],axis=1,ignore_index=True)
 
-    df.to_csv('/ifs/gsb/mcorrito/divergence/data/' + 'lda_final_' + str(numWords) + '_' + str(num_topics) + '_annual.csv')
+    df.to_csv('/home/mcorrito/projects/def-mcorrito/mcorrito/HH/data/' + 'lda_final_' + str(numWords) + '_' + str(num_topics) + '_annual.csv')
 
     print("MODEL DONE")
     
 ldaModel(4000,100)    
 ldaModel(4000,50)
 ldaModel(4000,25)
-#ldaModel(4000,250)    
-#ldaModel(4000,500)
+ldaModel(4000,250)    
+ldaModel(4000,500)
 
 
     
