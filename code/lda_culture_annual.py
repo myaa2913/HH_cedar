@@ -11,6 +11,8 @@ def ldaModel(numWords,num_topics):
     #load phrase doc-term matrix
     df = pd.read_csv('/home/mcorrito/projects/def-mcorrito/mcorrito/HH/data/' + 'top_unigrams_phrase_' + str(numWords) + '_pruned.csv',sep=',')
 
+    df.to_pickle('/home/mcorrito/projects/def-mcorrito/mcorrito/HH/data/' + 'top_unigrams_phrase_' + str(numWords) + '_pruned.pkl')
+    
     #remove ids
     ids = df.drop(df.columns[4:len(df.columns)],axis=1)
     df = df.drop(df.columns[[0,1,2,3]],axis=1)
@@ -60,6 +62,8 @@ def ldaModel(numWords,num_topics):
     #apply model to working sample#######################################################################
     df = pd.read_csv('/home/mcorrito/projects/def-mcorrito/mcorrito/HH/data/' + 'top_unigrams_' + str(numWords) + '_annual.csv',sep=',')
 
+    df.to_pickle('/home/mcorrito/projects/def-mcorrito/mcorrito/HH/data/' + 'top_unigrams_' + str(numWords) + '_annual.pkl')
+    
     #remove ids and save for later concat
     ids = df.drop(df.columns[4:len(df.columns)],axis=1)
     df = df.drop(df.columns[[0,1,2,3]],axis=1)
@@ -84,6 +88,8 @@ def ldaModel(numWords,num_topics):
 
     df.to_csv('/home/mcorrito/projects/def-mcorrito/mcorrito/HH/data/' + 'lda_final_' + str(numWords) + '_' + str(num_topics) + '_annual.csv')
 
+    df.to_pickle('/home/mcorrito/projects/def-mcorrito/mcorrito/HH/data/' + 'lda_final_' + str(numWords) + '_' + str(num_topics) + '_annual.pkl')
+    
     print("MODEL DONE")
     
 ldaModel(4000,100)    
