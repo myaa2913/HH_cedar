@@ -1,4 +1,5 @@
 import csv, lda
+import scipy.sparse as sps
 import pandas as pd
 import matplotlib
 matplotlib.use('Agg')
@@ -11,6 +12,7 @@ def ldaModel(numWords,num_topics):
     df = pd.read_csv('/home/mcorrito/projects/def-mcorrito/mcorrito/HH/data/' + 'top_unigrams_phrase_' + str(numWords) + '_pruned.csv',sep=',')
 
     #remove ids
+    ids = df.drop(df.columns[4:len(df.columns)],axis=1)
     df = df.drop(df.columns[[0,1,2,3]],axis=1)
 
     print(df.shape)
@@ -19,8 +21,9 @@ def ldaModel(numWords,num_topics):
     words = list(df.columns.values)
 
     #convert to matrix
-    mat = df.as_matrix()
-    
+    #mat = df.as_matrix()
+    mat = sps.coo_matrix(df)
+
     #lda (use 350 iterations)
     model = lda.LDA(n_topics=num_topics, n_iter=700, random_state=1)
     model.fit(mat)
@@ -34,6 +37,13 @@ def ldaModel(numWords,num_topics):
     plt.close()
 
 
+    #append ids onto the topic proportions and save as csv 
+    df = pd.DataFrame(model)
+    df = pd.concat([ids,wordCount,df],axis=1,ignore_index=True)
+
+    df.to_pickle('/home/mcorrito/projects/def-mcorrito/mcorrito/HH/data/' + 'lda_phrase_final_' + str(numWords) + '_' + str(num_topics) + '_annual.pkl')
+  
+    
     ###save model components for use and evaluation
     ##save top words for each topic to csv file
     with open('/home/mcorrito/projects/def-mcorrito/mcorrito/HH/output/' + str(numWords) + '_' + str(num_topics) + '_' + 'lda_words','w') as csvfile:
@@ -60,7 +70,8 @@ def ldaModel(numWords,num_topics):
     wordCount = np.sum(df,axis=1)
         
     #convert to matrix
-    mat = df.as_matrix()
+    #mat = df.as_matrix()
+    mat = sps.coo_matrix(df)
     
     #apply model
     print("BEGIN")
