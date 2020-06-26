@@ -33,19 +33,20 @@ def ldaModel(numWords,num_topics):
     doc_topic = model.doc_topic_
     n_top_words = 100
 
+    model_phrase = model.transform(mat)
+    
+    #append ids onto the topic proportions and save as csv 
+    df = pd.DataFrame(model_phrase)
+    df = pd.concat([ids,df],axis=1,ignore_index=True)
+    df.to_pickle('/home/mcorrito/projects/def-mcorrito/mcorrito/HH/data/' + 'lda_phrase_final_' + str(numWords) + '_' + str(num_topics) + '_annual.pkl')
+
+    
     #plot and save convergence graph
     plt.plot(model.loglikelihoods_[5:])
     plt.savefig('/home/mcorrito/projects/def-mcorrito/mcorrito/HH/output/' + 'lda_convergence_' + str(numWords) + '_' + str(num_topics) + '.png')
     plt.close()
 
 
-    #append ids onto the topic proportions and save as csv 
-    df = pd.DataFrame(model)
-    df = pd.concat([ids,wordCount,df],axis=1,ignore_index=True)
-
-    df.to_pickle('/home/mcorrito/projects/def-mcorrito/mcorrito/HH/data/' + 'lda_phrase_final_' + str(numWords) + '_' + str(num_topics) + '_annual.pkl')
-  
-    
     ###save model components for use and evaluation
     ##save top words for each topic to csv file
     with open('/home/mcorrito/projects/def-mcorrito/mcorrito/HH/output/' + str(numWords) + '_' + str(num_topics) + '_' + 'lda_words','w') as csvfile:
@@ -92,11 +93,11 @@ def ldaModel(numWords,num_topics):
     
     print("MODEL DONE")
     
-ldaModel(4000,100)    
+#ldaModel(4000,100)    
 ldaModel(4000,50)
-ldaModel(4000,25)
-ldaModel(4000,250)    
-ldaModel(4000,500)
+#ldaModel(4000,25)
+#ldaModel(4000,250)    
+#ldaModel(4000,500)
 
 
     
