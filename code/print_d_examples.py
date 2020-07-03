@@ -18,14 +18,13 @@ def extract(filename):
             next(read)
 
             for row in read:
-                phraseID = row[0]
+                orgID = row[0]
+                reviewID = row[1]
+                phraseID = row[2]
 
-                #loop through dictionary to find reviewid
-                for orgID in data.keys():
-                    for reviewID in data[orgID].keys():
-                        if phraseID in data[orgID][reviewID]['all'].keys():
-                            text = data[orgID][reviewID]['all'][phraseID]['text']
-                            f.write(str(text) + '\n')                             
+                if data[orgID][reviewID]['all'][phraseID]:
+                    text = data[orgID][reviewID]['all'][phraseID]['text']
+                    f.write(str(text) + '\n')
 
     csvfile.close()
     f.close()
