@@ -10,10 +10,10 @@ def extract(var):
     f = open('/home/mcorrito/projects/def-mcorrito/mcorrito/HH/output/' + var + '.txt', 'w')
 
     #loop through each reviewid and extract from dictionary
-    with open('/home/mcorrito/projects/def-mcorrito/mcorrito/HH/output/dynamic_vars.csv', 'r') as csvfile:
+    with open('/home/mcorrito/projects/def-mcorrito/mcorrito/HH/data/dynamic_vars.csv', 'r') as csvfile:
 
         #load dictionary
-        with open('/home/mcorrito/projects/def-mcorrito/mcorrito/HH/data/gd_dict_06232020', 'r') as gd:
+        with open('/home/mcorrito/projects/def-mcorrito/mcorrito/HH/data/gd_dict_06232020_annual', 'r') as gd:
             data = json.load(gd)
 
             read = csv.reader(csvfile, delimiter = ',')
