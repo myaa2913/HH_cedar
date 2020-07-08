@@ -4,7 +4,7 @@ import csv, json
 def extract(filename):
 
     #open output text file
-    f = open('/home/mcorrito/projects/def-mcorrito/mcorrito/HH/output/' + filename + '.txt', 'w')    
+    f = open('/home/mcorrito/projects/def-mcorrito/mcorrito/HH/output/' + filename + '.txt', 'w')
 
     #loop through each reviewid and extract from dictionary
     with open('/home/mcorrito/projects/def-mcorrito/mcorrito/HH/output/' + filename + '.csv', 'r') as csvfile:
